@@ -18,7 +18,7 @@ public class HelloController {
     public String gatherInfo(@RequestParam String name, @RequestParam String language){
         return createMessage(name,language);
     }
-    public String createMessage(String name, String language) {
+    public String createMessage(String name, String language) { //try redoing with switch case
         String greeting = "";
         if (language.equalsIgnoreCase("english")) {
             greeting = "Hello";
