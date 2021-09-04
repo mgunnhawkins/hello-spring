@@ -1,8 +1,11 @@
 package org.launchcode.skillstracker.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.launchcode.skillstracker.Person;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,37 +81,21 @@ public class SkillsController {
 
     //TODO:  use @PostMapping and Request param to update the HTML with an h1 stating the user's name and an ol
     // showing the three programming languages in the order they chose
-    //processes form data
-    //generate new URL to issue 301 redirect with query param
 
-    @PostMapping("/form")
-    public String gatherInfo(@RequestParam String name, @RequestParam String firstLanguage,
-                             @RequestParam String secondLanguage, @RequestParam String thirdLanguage) {
-        String newHTML = String.format("<html>" +
-                "<body>" +
-                "<h1>%s</h1>" +
-                "<ol>" +
-                "<li>%s</li>" +
-                "<li>%s</li>" +
-                "<li>%s</li>" +
-                "</ol>"+
-                "</body>" +
-                "</html>", name, firstLanguage, secondLanguage, thirdLanguage) ;
-        return newHTML;
+    //HTTP serverLet response- HTTP response object for the framework
+
+
+    @PostMapping("/form") //handles request coming in
+    public ModelAndView gatherInfo(@RequestParam String name, @RequestParam String firstLanguage,
+                                   @RequestParam String secondLanguage, @RequestParam String thirdLanguage, HttpServletRequest request) {
+       String url = String.format("/?name=%s&firstLanguage=%s&secondLanguage=%s&thirdLanguage=%s", name,
+               firstLanguage, secondLanguage, thirdLanguage);
+       request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.PERMANENT_REDIRECT);
+       return new ModelAndView(String.format("redirect:%s", url));
     }
-
-
-
-
-
-
-
-
-
 }
 
 
-//google springboot check for query parameters
-    //@GetMapping()
+
 
 
